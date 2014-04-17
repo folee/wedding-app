@@ -57,7 +57,7 @@
 										localStorage.setItem('album_code', data.album.mobile_code);
 										localStorage.setItem('album_photo', data.album.thumbnail);
 										localStorage.setItem('album_user', data.album.profile_id);
-										$.mobile.changePage('album.html');
+										$.mobile.changePage('upload.html');
 									} else {
 										$('#scan_message').html('<p>Album code not recognized.</p>').addClass('warning');
 									}

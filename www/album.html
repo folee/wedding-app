@@ -56,26 +56,31 @@
 					},
 					error: function() {
 						$("#album_loader").hide();
-						$('#album_message').html('<p align="center">Server communication error while trying to retrieve album photos.</p>').addClass("errpr");
+						$('#album_message').html('<p align="center">Server communication error while trying to retrieve album photos.</p>').addClass("error");
 					},
 					success: function(data) {
 						$("#album_loader").hide();
 						if (data.response === "true") {
-							$('#album_photos').empty();
-							$("#album_photos").append('<div class="ui-grid-a"><ul id="grid" class="gallery"></ul></div>');
-							var image_class = "ui-block-a";
-							var html = '';
-							for (i = 0; i < data.photos.photo.length; i++) {
-								html += '<li><a href="' + photo_url + album_user + '/resized/' + data.photos.photo[i].resized + '" rel="external"><img src="' + photo_url + album_user + '/thumbnail/' + data.photos.photo[i].thumbnail + '" class="img-border" /></a></li>';	
-								if (image_class == "ui-block-a") {
-									image_class = "ui-block-b";
-								} else {
-									image_class = "ui-block-a";                
+							if (data.photos.photo.length == 0) {
+								$('#album_photos').empty();
+								$("#album_photos").append('<p align="center">No photos to show.</p>');
+							} else {
+								$('#album_photos').empty();
+								$("#album_photos").append('<div class="ui-grid-a"><ul id="grid" class="gallery"></ul></div>');
+								var image_class = "ui-block-a";
+								var html = '';
+								for (i = 0; i < data.photos.photo.length; i++) {
+									html += '<li><a href="' + photo_url + album_user + '/resized/' + data.photos.photo[i].resized + '" rel="external"><img src="' + photo_url + album_user + '/thumbnail/' + data.photos.photo[i].thumbnail + '" class="img-border" /></a></li>';	
+									if (image_class == "ui-block-a") {
+										image_class = "ui-block-b";
+									} else {
+										image_class = "ui-block-a";                
+									}
 								}
+								$("#grid").append(html);
+								$('#album_photos').trigger('create');
+								var myPhotoSwipe = $("#grid a").photoSwipe();
 							}
-							$("#grid").append(html);
-							$('#album_photos').trigger('create');
-							var myPhotoSwipe = $("#grid a").photoSwipe();
 						} else {
 							$('#album_message').html('<p align="center">Error retrieving photos.</p>').addClass('error');
 						}
