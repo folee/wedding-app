@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+		<title>Wedding</title>
+		<link href="css/jquery-mobile.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+        <script src="js/global.js"></script>
+		<script src="js/jquery-mobile.js"></script>
+		<script>$.support.cors = true;</script>
+		<script src="cordova.js"></script>
+        <script src="js/connection.js"></script>
+		<script src="cordova_plugins.js"></script>
+		<script src="barcodescanner.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="instructions">
+			<div id="header" data-role="header" data-position="fixed"><p align="center">Wedding</p></div>
+			<div id="content" data-role="content">
+				<p>Thank you for downloading the Wedding Connect mobile application. You will now 
+				be able to upload your photos directly to a photo album. In order to do that you 
+				will first need to provide an album code. Your event hosts will be able to provide 
+				you with this code. Once you enter this good you are able to start uploading photos 
+				by clicking the Upload Photo link.</p>
+				<p>Each time you open this application we check if you have an album code saved. 
+				If you do we authenticate it and if it authenticates you are taken to the page to 
+				upload photos. If it does not you are provided with a link to where you are able 
+				to enter a new album code. Album codes do not last forever. They are only good from 
+				2 hours before until 12 hours after the start of a particular event.</p>
+				<div data-role="collapsible-set">
+					<div data-role="collapsible" data-collapsed="true">
+						<h3>Privacy Policy</h3>
+						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical 
+						Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at 
+						Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem 
+						Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable 
+						source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes 
+						of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular 
+						during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in 
+						section 1.10.32.</p>
+					</div>
+					<div data-role="collapsible">
+						<h3>Terms of Agreement</h3>
+						<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical 
+						Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at 
+						Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem 
+						Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable 
+						source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes 
+						of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular 
+						during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in 
+						section 1.10.32.</p>
+					</div>
+				</div>
+			</div>
+			<div id="footer" data-role="footer" data-position="fixed">
+				<nav data-role="navbar">
+					<ul>
+						<li><a href="index.html" data-icon="home">Home</a></li>
+						<li><a href="instructions.html" data-icon="info">Instructions</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</body>
+</html>

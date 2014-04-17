@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+		<title>Wedding</title>
+		<link href="css/jquery-mobile.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/global.js"></script>
+		<script src="js/jquery-mobile.js"></script>
+		<script>$.support.cors = true;</script>
+		<script src="cordova.js"></script>
+		<script src="js/connection.js"></script>
+		<script src="cordova_plugins.js"></script>
+		<script src="barcodescanner.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="login">
+			<div id="header" data-role="header" data-position="fixed"><p align="center">Wedding</p></div>
+			<div id="content" data-role="content">
+				<div class="info">In order to connect to an album and upload photos to it, you must first scan it's QR Code. Press the Scan QR Code button below and then scan the album's code. You will automatically be verified and connected to the album.</div>
+        		<div id="scan_message"></div>
+				<div>
+					<button class="ui-btn qr-scan">Scan QR Code</button>
+				</div>
+			</div>
+			<div id="footer" data-role="footer" data-position="fixed">
+        		<nav data-role="navbar">
+                	<ul>
+                    	<li><a href="index.html" data-icon="home">Home</a></li>
+                    	<li><a href="instructions.html" data-icon="info">Instructions</a></li>
+                	</ul>
+            	</nav>
+        	</div>
+			<script>
+			$(document).on('click', '.qr-scan', function(event) {
+				cordova.plugins.barcodeScanner.scan(
+					function(result) {
+						if (!result.cancelled === true) {
+							$.ajax({
+								url: result.text,
+								type: 'get',
+								dataType: 'json',
+								crossDomain: true,
+								error: function() {
+									$('#scan_message').html('<p>Server communication error while trying to verify album code.</p>').addClass('error');
+								},
+								success: function(data) {
+									if (data.response == 'true') {
+										localStorage.setItem('album_id', data.album.id);
+										localStorage.setItem('album_title', data.album.title);
+										localStorage.setItem('album_bride', data.album.bride);
+										localStorage.setItem('album_groom', data.album.groom);
+										localStorage.setItem('album_start', data.album.start);
+										localStorage.setItem('album_end', data.album.end);
+										localStorage.setItem('album_code', data.album.mobile_code);
+										localStorage.setItem('album_photo', data.album.thumbnail);
+										localStorage.setItem('album_user', data.album.profile_id);
+										$.mobile.changePage('album.html');
+									} else {
+										$('#scan_message').html('<p>Album code not recognized.</p>').addClass('warning');
+									}
+								}
+							});
+						}
+					},
+					function(error) {
+						$('#scan_message').html('<p>Album code not recognized.</p>').addClass('warning');
+					}
+				);
+			});
+			</script>
+    	</div>
+	</body>
+</html>
