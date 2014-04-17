@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+		<title>Wedding</title>
+		<link href="css/jquery-mobile.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/global.js"></script>
+		<script src="js/jquery-mobile.js"></script>
+		<script>$.support.cors = true;</script>
+		<script src="cordova.js"></script>
+		<script src="js/connection.js"></script>
+		<script src="cordova_plugins.js"></script>
+		<script src="barcodescanner.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="index">
+			<div id="header" data-role="header" data-position="fixed"><p align="center">Wedding</p></div>
+			<div id="content" data-role="content">
+				<div id="index_message"></div>
+				<nav>
+					<ul id="index_listview" data-role="listview" data-inset="true"></ul>
+				</nav>
+			</div>
+			<div id="footer" data-role="footer" data-position="fixed">
+				<nav data-role="navbar">
+					<ul>
+						<li><a href="index.html" data-icon="home">Home</a></li>
+						<li><a href="instructions.html" data-icon="info">Instructions</a></li>
+					</ul>
+				</nav>
+			</div>
+			<script>
+			$(document).on('pagebeforeshow', '#index', function() {
+				var now 		= formatTimestamp(new Date());
+				var now 		= Math.round(new Date().getTime() / 1000);
+				var album_id 	= localStorage.getItem('album_id');
+				var album_start = localStorage.getItem('album_start');
+				var album_end 	= localStorage.getItem('album_end');
+				var album_title = localStorage.getItem('album_title');
+				var album_bride = localStorage.getItem('album_bride');
+				var album_groom = localStorage.getItem('album_groom');
+				var album_photo = localStorage.getItem('album_photo');
+				var album_user 	= localStorage.getItem('album_user');
+				if (album_id === null) {
+					$('#index_message').html('<p>You are not connected to an album at this time. Select Enter Album Code below to connect to an album and start uploading photos.</p>').addClass('info');
+					$('#index_listview').html('<li><a href="scan.html">Connect To Album</a></li>').listview('refresh');
+				} else if (now < album_start || now > album_end) {
+					$('#index_message').html('<p>The album you are connected to is no longer accepting uploads. You may change albums by selecting Change Albums below.</p>').addClass('warning');
+					$('#index_listview').html('<li><a href="scan.html">Change Album</a></li>').listview('refresh');
+				} else {
+					$('#index_message').html(
+						'<p><strong>Album:</strong> ' + 
+						album_title + ' <br /><strong>By:</strong> ' + 
+						album_bride + ' & ' + 
+						album_groom + '</p>' + 
+						'<p><img src="' + photo_url + album_user + '/thumbnail/' + album_photo + '" width="75px" /></p>'
+					).addClass('info');
+					$('#index_listview').html(
+						'<li><a href="upload.html">New Photo</a></li>' + 
+						'<li><a href="album.html">View Album</a></li>' + 
+						'<li><a href="scan.html">Change Album</a></li>' + 
+						'<li><a href="share.html">Share Album</a></li>'
+					).listview('refresh');
+				}
+			});
+			</script>
+		</div>
+	</body>
+</html>

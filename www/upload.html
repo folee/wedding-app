@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+		<title>Wedding</title>
+		<link href="css/jquery-mobile.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/global.js"></script>
+		<script src="js/jquery-mobile.js"></script>
+		<script>$.support.cors = true;</script>
+		<script src="cordova.js"></script>
+		<script src="js/connection.js"></script>
+		<script src="cordova_plugins.js"></script>
+		<script src="barcodescanner.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="upload">
+			<div id="header" data-role="header" data-position="fixed"><p align="center">Wedding</p></div>
+			<div id="content" data-role="content">
+				<div id="upload_message" class="info"></div>
+				<div id="controls">
+					<input type="button" onclick="takePhoto();" value="Take Picture" />
+					<input type="button" onclick="selectPhoto();" value="Select Picture" />
+					<p align="center"><img id="image" src="" alt="Your Photo" /></p>
+					<div id="caption_fieldset" class="fieldset">
+						<label for="caption">Add A Caption:</label>
+						<input type="text" id="caption" name="caption" />
+					</div>
+					<input type="button" onclick="uploadPhoto();" value="Upload" data-theme="b" />
+				</div>
+				<div id="upload_loader">
+					<p align="center"><strong>Please Wait, Uploading Photo...</strong><br />
+					<img src="images/loading.gif" /></p>
+				</div>
+				<div id="upload_success" class="success"><p align="center">Photo uploaded successfully.</p></div>
+				<div id="upload_error" class="error"><p align="center">Unable to upload photo. Please try again.</p></div>
+			</div>
+			<div id="footer" data-role="footer" data-position="fixed">
+				<nav data-role="navbar">
+					<ul>
+						<li><a href="index.html" data-icon="home">Home</a></li>
+						<li><a href="instructions.html" data-icon="info">Instructions</a></li>
+					</ul>
+				</nav>
+			</div>
+			<script>
+			$(document).on('pagebeforeshow', '#upload', function() {
+				$("#upload_loader").hide();
+				$("#upload_success").hide();
+				$("#upload_error").hide();
+				$("#caption_fieldset").hide();
+				var now = Math.round(new Date().getTime() / 1000);
+				var album_id 	= localStorage.getItem('album_id');
+				var album_start = localStorage.getItem('album_start');
+				var album_end 	= localStorage.getItem('album_end');
+				var album_title = localStorage.getItem('album_title');
+				var album_bride = localStorage.getItem('album_bride');
+				var album_groom = localStorage.getItem('album_groom');
+				var album_photo = localStorage.getItem('album_photo');
+				var album_user 	= localStorage.getItem('album_user');		
+				if (now < album_start || now > album_end) {
+					$('#upload_message').html('<p align="center">The album you are connected to is not accepting uploads at this time.</p>');
+					$('#controls').hide();
+				} else {
+					$('#upload_message').html(
+						'<p align="center"><strong>Album:</strong> ' + 
+						album_title + ' <br /><strong>By:</strong> ' + 
+						album_bride + ' & ' + 
+						album_groom + '</p>' + 
+						'<p align="center"><img src="' + photo_url + album_user + '/thumbnail/' + album_photo + '" width="75px" /></p>'
+					);
+					$('#controls').show();
+				}
+			});
+			var pictureSource;
+			var destinationType;
+			var selectedImageURI;
+			document.addEventListener("deviceready", onDeviceReady, false);
+			// Set picture source and destination type
+			function onDeviceReady() {
+				pictureSource = Camera.PictureSourceType;
+				destinationType = Camera.DestinationType;
+			}
+			// On success
+			function onPhotoURISuccess(imageURI) {
+				var image = document.getElementById('image');
+				image.style.display = 'block';
+				image.src = imageURI;
+				selectedImageURI = imageURI;
+				$("#caption_fieldset").show();
+			}
+			// Select photo from album
+			function selectPhoto() {
+				navigator.camera.getPicture(onPhotoURISuccess, selectPhotoFail, {
+					quality: 50,
+					destinationType: destinationType.FILE_URI,
+					sourceType: pictureSource.PHOTOLIBRARY,
+					correctOrientation: true
+				});
+			}
+			// Take photo with camera
+			function takePhoto() {
+				navigator.camera.getPicture(onPhotoURISuccess, takePhotoFail, {
+					quality: 50,
+					destinationType: destinationType.FILE_URI,
+					sourceType: pictureSource.CAMERA,
+					correctOrientation: true
+				});
+			}
+			// Upload photo
+			function uploadPhoto() {
+				$("#controls").hide();
+				$("#upload_loader").show();
+				var options = new FileUploadOptions();
+				options.fileKey = "file";
+				options.fileName = selectedImageURI.substr(selectedImageURI.lastIndexOf('/')+1);
+				options.mimeType = "image/jpeg";
+				var params = new Object();
+				params.album_id = localStorage.getItem('album_id');
+				params.caption = $("#caption").val();
+				options.params = params;
+				options.chunkedMode = false;
+				var ft = new FileTransfer();
+				ft.upload(selectedImageURI, encodeURI("http://wedding.minortechnologies.com/mobile/upload-photo"), win, fail, options);
+			}
+			// If upload fails
+			function fail(error) {
+				$("#upload_loader").hide();
+				$("#upload_error").show();
+				setTimeout(function() {
+					$("#upload_error").hide();
+					$("#controls").show();
+				}, 3000);
+			}
+			
+			function selectPhotoFail(error) {
+				
+			}
+			
+			function takePhotoFail(error) {
+				
+			}
+			// If upload succeeds
+			function win(r) {
+				$("#upload_loader").hide();
+				$("#image").hide();
+				$("#upload_success").show();
+				setTimeout(function() {
+					$("#upload_success").hide();
+					$("#controls").show();
+					$("#caption_fieldset").hide();
+					$("#caption").val('');
+				}, 3000);
+			}
+			</script>
+		</div>
+	</body>
+</html>

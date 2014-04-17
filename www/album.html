@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, user-scalable=no">
+		<title>Wedding</title>
+		<link href="css/jquery-mobile.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/global.js"></script>
+		<script src="js/jquery-mobile.js"></script>
+		<script>$.support.cors = true;</script>
+		<script src="cordova.js"></script>
+		<script src="js/connection.js"></script>
+		<script src="cordova_plugins.js"></script>
+		<script src="barcodescanner.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="album">
+			<div id="header" data-role="header" data-position="fixed"><p align="center">Wedding</p></div>
+			<div id="content" data-role="content">
+				<div id="album_message" style="margin-bottom:20px;"></div>
+				<div id="album_loader">
+					<p align="center">
+						<strong>Please Wait, Loading Photos...</strong><br /><img src="images/loading.gif" />
+					</p>
+				</div>
+				<div id="album_photos"></div>
+			</div>
+			<div id="footer" data-role="footer" data-position="fixed">
+				<nav data-role="navbar">
+					<ul>
+						<li><a href="index.html" data-icon="home">Home</a></li>
+						<li><a href="instructions.html" data-icon="info">Instructions</a></li>
+					</ul>
+				</nav>
+			</div>
+			<script src="js/klass.min.js"></script>
+			<script src="js/photoswipe.js"></script>
+			<script>
+			$(document).on('pagebeforeshow', '#album', function() {
+				var album_id = localStorage.getItem('album_id');
+				var album_title = localStorage.getItem('album_title');
+				var album_bride = localStorage.getItem('album_bride');
+				var album_groom = localStorage.getItem('album_groom');
+				var album_user = localStorage.getItem('album_user');
+				$('#album_message').html('<p><strong>Album:</strong> ' + album_title + ' <br /><strong>By:</strong> ' + album_bride + ' & ' + album_groom + '</p>').addClass('info');
+				$.ajax({
+					url: server_url + "get_photos",
+					type: "post",
+					data: 'album_id=' + album_id,
+					dataType: 'json',
+					crossDomain: true,
+					beforeSend : function () {
+						$('#album_loader').show();
+					},
+					error: function() {
+						$("#album_loader").hide();
+						$('#album_message').html('<p align="center">Server communication error while trying to retrieve album photos.</p>').addClass("errpr");
+					},
+					success: function(data) {
+						$("#album_loader").hide();
+						if (data.response === "true") {
+							$('#album_photos').empty();
+							$("#album_photos").append('<div class="ui-grid-a"><ul id="grid" class="gallery"></ul></div>');
+							var image_class = "ui-block-a";
+							var html = '';
+							for (i = 0; i < data.photos.photo.length; i++) {
+								html += '<li><a href="' + photo_url + album_user + '/resized/' + data.photos.photo[i].resized + '" rel="external"><img src="' + photo_url + album_user + '/thumbnail/' + data.photos.photo[i].thumbnail + '" class="img-border" /></a></li>';	
+								if (image_class == "ui-block-a") {
+									image_class = "ui-block-b";
+								} else {
+									image_class = "ui-block-a";                
+								}
+							}
+							$("#grid").append(html);
+							$('#album_photos').trigger('create');
+							var myPhotoSwipe = $("#grid a").photoSwipe();
+						} else {
+							$('#album_message').html('<p align="center">Error retrieving photos.</p>').addClass('error');
+						}
+					}
+				});
+			});
+			</script>
+		</div>
+	</body>
+</html>
