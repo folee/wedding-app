@@ -33,7 +33,7 @@
 			$(document).on('pagebeforeshow', '#share', function(){
 				var album_user = localStorage.getItem('album_user');
 				var album_code = localStorage.getItem('album_code');
-				$("#share_content").html('<img src="' + photo_url + '/' + album_user + '/qr_codes/' + album_code + '.png">' );
+				$("#share_content").html('<p align="center"><img src="' + photo_url + '/' + album_user + '/qr_codes/' + album_code + '.png"></p>');
 			});
 			</script>
     	</div>

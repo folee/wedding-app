@@ -22,6 +22,9 @@
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
     <name>WeddingApp</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

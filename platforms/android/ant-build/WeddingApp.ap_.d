@@ -126,6 +126,12 @@
 /Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/js/klass.min.js \
 /Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/js/photoswipe.js \
 /Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/com.phonegap.plugins.barcodescanner \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/com.phonegap.plugins.barcodescanner/www \
 /Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/com.phonegap.plugins.barcodescanner/www/barcodescanner.js \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/Camera.js \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverHandle.js \
+/Applications/MAMP/htdocs/wedding-app/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverOptions.js \
 /Applications/MAMP/htdocs/wedding-app/platforms/android/ant-build/AndroidManifest.xml \

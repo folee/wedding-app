@@ -77,11 +77,13 @@
 			var pictureSource;
 			var destinationType;
 			var selectedImageURI;
-			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener('deviceready', onDeviceReady, false);
 			// Set picture source and destination type
 			function onDeviceReady() {
-				pictureSource = Camera.PictureSourceType;
-				destinationType = Camera.DestinationType;
+				// pictureSource = Camera.PictureSourceType;
+				// destinationType = Camera.DestinationType;
+				pictureSource = navigator.camera.PictureSourceType;
+				destinationType = navigator.camera.DestinationType;
 			}
 			// On success
 			function onPhotoURISuccess(imageURI) {
@@ -123,7 +125,7 @@
 				options.params = params;
 				options.chunkedMode = false;
 				var ft = new FileTransfer();
-				ft.upload(selectedImageURI, encodeURI("http://wedding.minortechnologies.com/mobile/upload-photo"), win, fail, options);
+				ft.upload(selectedImageURI, encodeURI("http://wedding.minortechnologies.com/mobile/upload-photo/"), win, fail, options);
 			}
 			// If upload fails
 			function fail(error) {
