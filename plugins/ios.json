@@ -22,7 +22,7 @@
                     "AssetsLibrary.framework": [
                         {
                             "xml": "false",
-                            "count": 2
+                            "count": 4
                         }
                     ],
                     "CoreVideo.framework": [
@@ -58,7 +58,7 @@
                     "MobileCoreServices.framework": [
                         {
                             "xml": "false",
-                            "count": 1
+                            "count": 2
                         }
                     ]
                 }
@@ -73,6 +73,14 @@
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -85,7 +93,14 @@
         },
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.minortechnologies.wedding"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "com.minortechnologies.wedding"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.minortechnologies.wedding"
+        }
+    }
 }
