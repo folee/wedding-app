@@ -13,13 +13,13 @@ $(document).on('mobileinit', function() {
 console.log('Global file read.');
 
 // Define global server and photo URL's
-if (!navigator.userAgent.toLowerCase().match('chrome')) {
+//if (!navigator.userAgent.toLowerCase().match('chrome')) {
 	var server_url = 'http://wedding.minortechnologies.com/mobile/';
 	var photo_url = 'http://wedding.minortechnologies.com/media/photos/';
-} else {
-    var server_url = 'http://localhost/weddingconnect/mobile/';
-    var photo_url = 'http://localhost/weddingconnect/media/photos/';
-}
+//} else {
+//    var server_url = 'http://localhost/weddingconnect/mobile/';
+//    var photo_url = 'http://localhost/weddingconnect/media/photos/';
+//}
 
 // Function to convert current GMT time to yyyy-mm-dd hh:mm:ss format
 function formatTimestamp(date) {
