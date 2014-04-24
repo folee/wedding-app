@@ -61,3 +61,19 @@ ul#grid li img {width:100%; height:auto; overflow:hidden;}
 /* iOS7 Header Fix */
 #ios7statusbar {width:100%; height:20px; background-color:white; position:fixed; z-index:100;}
 .ios7 .ui-page, .ios7 .ui-header, .ios7 .ui-pane {margin-top: 20px;}
+
+/* jQm Theme Overrides */
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit,
+html .ui-bar-a .ui-bar-inherit,
+html .ui-body-a .ui-bar-inherit,
+html body .ui-group-theme-a .ui-bar-inherit {
+	color: white;
+	background: #000000;
+	text-shadow: 0 1px 0 #333;
+}
+
+#footer .ui-btn {
+	background: #222222;
+	color: #ffffff;
+	text-shadow: 0 1px 0 #333;
+}
