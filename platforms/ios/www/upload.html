@@ -59,16 +59,16 @@
 				var album_bride = localStorage.getItem('album_bride');
 				var album_groom = localStorage.getItem('album_groom');
 				var album_photo = localStorage.getItem('album_photo');
-				var album_user 	= localStorage.getItem('album_user');		
+				var album_user 	= localStorage.getItem('album_user');
 				if (now < album_start || now > album_end) {
 					$('#upload_message').html('<p align="center">The album you are connected to is not accepting uploads at this time.</p>');
 					$('#controls').hide();
 				} else {
 					$('#upload_message').html(
-						'<p align="center"><strong>Album:</strong> ' + 
-						album_title + ' <br /><strong>By:</strong> ' + 
-						album_bride + ' & ' + 
-						album_groom + '</p>' + 
+						'<p align="center"><strong>Album:</strong> ' +
+						album_title + ' <br /><strong>By:</strong> ' +
+						album_bride + ' & ' +
+						album_groom + '</p>' +
 						'<p align="center"><img src="' + photo_url + album_user + '/thumbnail/' + album_photo + '" width="75px" /></p>'
 					);
 					$('#controls').show();
@@ -88,6 +88,7 @@
 			// On success
 			function onPhotoURISuccess(imageURI) {
 				var image = document.getElementById('image');
+				console.log(imageURI);
 				image.style.display = 'block';
 				image.src = imageURI;
 				selectedImageURI = imageURI;
@@ -117,7 +118,7 @@
 				$("#upload_loader").show();
 				var options = new FileUploadOptions();
 				options.fileKey = "file";
-				options.fileName = selectedImageURI.substr(selectedImageURI.lastIndexOf('/')+1);
+				options.fileName = selectedImageURI.substr(selectedImageURI.lastIndexOf('/')+1)+'.jpg';
 				options.mimeType = "image/jpeg";
 				var params = new Object();
 				params.album_id = localStorage.getItem('album_id');
@@ -125,6 +126,8 @@
 				options.params = params;
 				options.chunkedMode = false;
 				var ft = new FileTransfer();
+				console.log(selectedImageURI);
+
 				ft.upload(selectedImageURI, encodeURI("http://wedding.minortechnologies.com/mobile/upload-photo/"), win, fail, options);
 			}
 			// If upload fails
@@ -136,16 +139,19 @@
 					$("#controls").show();
 				}, 3000);
 			}
-			
+
 			function selectPhotoFail(error) {
-				
+				console.log(error);
 			}
-			
+
 			function takePhotoFail(error) {
-				
+				console.log(error);
 			}
 			// If upload succeeds
 			function win(r) {
+				console.log("Code = " + r.responseCode);
+				console.log("Response = " + r.response);
+				console.log("Sent = " + r.bytesSent);
 				$("#upload_loader").hide();
 				$("#image").hide();
 				$("#upload_success").show();
